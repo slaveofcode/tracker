@@ -11,4 +11,6 @@
 |
 */
 
-Route::match('get', '/', 'HomeController@index');
+Route::match(['get', 'post'], '/', 'HomeController@index');
+Route::get('auth/google', 'Auth\AuthController@redirectToProvider')->name('googleAuth');
+Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');

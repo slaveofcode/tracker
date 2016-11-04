@@ -183,7 +183,7 @@ td,
 th {
   padding: 0; }
 
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/srcpublic/build//css/main-282f0f5b6e.css */
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/srcpublic/build//css/main-249c5a9b63.css */
 @media print {
   *,
   *:before,
@@ -5793,6 +5793,12 @@ body {
   margin-bottom: 20px; }
 
 #input-tracker {
-  font-size: 32px; }
+  font-size: 32px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  height: auto;
+  outline: none;
+  box-shadow: none;
+  border: none; }
 
 /*# sourceMappingURL=main.css.map */

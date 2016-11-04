@@ -16,5 +16,10 @@ require('./bootstrap');
 Vue.component('example', require('./components/Example.vue'));
 
 const app = new Vue({
-    el: '#app'
+    el: '#input-tracker',
+    methods: {
+        opening: function(){
+            this.focus;
+        }
+    }
 });

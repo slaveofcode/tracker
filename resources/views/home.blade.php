@@ -4,6 +4,7 @@
 
 @section('container')
 <div id="form-action-tracker" class="col-md-6 col-md-offset-3">
+    <a href="{{ route('googleAuth') }}">Login Google</a>
     <h1 class="title">Action Tracker</h1>
     <form action="/" method="post">
         <div class="form-group">
