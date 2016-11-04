@@ -26,6 +26,30 @@ class AuthController extends Controller
     {
         $user = Socialite::driver('google')->user();
 
-        $user->token;
+        $user->getId();
+        $user->getNickname();
+        $user->getName();
+        $user->getAvatar();
+
+        /*
+         * Find existing users
+         */
+        if (!User::where('email', '=', $user->getEmail())->exists())
+        {
+            $newUser        = new User;
+            $newUser->name  = $user->getName();
+            $newUser->email = $user->getEmail();
+            $newUser->save();
+
+        } else {
+            /*
+             * Authorizing
+             */
+            $foundUser = User::where('email', '=', $user->getEmail())->first();
+        }
+
+        
     }
+
+
 }
