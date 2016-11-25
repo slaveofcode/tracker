@@ -23,6 +23,23 @@ body {
     padding-top: $gap;
 }
 
+#tracker-menu-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    background: rgba(0,0,0, .1);
+    padding: 2px 10px;
+    font-size: 17px;
+
+    a:link, a:visited {
+        color: $brand-success;
+    }
+
+    a:hover {
+        color: lighten($brand-success, 10%);
+    }
+}
+
 .title {
     font-size: 56px;
 }
@@ -85,5 +102,29 @@ body {
         content: '';
         display: block;
         clear: both;
+    }
+}
+
+.tracker-action-item {
+    border: 1px solid lighten($brand-success, 10%);
+    border-radius: 3px;
+    padding: $gap;
+    margin-bottom: $gap;
+    box-shadow: 0 1px 7px -4px #333;
+    -moz-box-shadow: 0 1px 7px -4px #333;
+    -webkit-box-shadow: 0 1px 7px -4px #333;
+}
+
+.tracker-item-create {
+
+    #tracker-input-content {
+        width: 100%;
+        outline: 0px solid transparent;
+        border: none;
+        resize: none;
+    }
+
+    #tracker-submit-content {
+
     }
 }

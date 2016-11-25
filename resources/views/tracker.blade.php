@@ -43,30 +43,26 @@
         <hr/>
     </div>
     <div class="tracker-body">
-        <button class="btn btn-primary">Add Action +</button>
-        <div class="tracker-action-item">
-            <div class="tracker-action-main">
-                <div class="row">
-                    <div class="col-xs-12 col-md-9">
-                        Configure css and javascript
-                    </div>
-                    <div class="col-xs-12 col-md-3">
-                        Start / Stop / Done
-                    </div>
-                </div>
+        
+        @include('components.tracker-create')
+        
+        <div class="row">
+            <div class="col-xs-12 col-md-9">
+                @include('components.tracker-list')
             </div>
-            <div class="tracker-action-history hidden">
-                <div class="action-history-item">
-                    <div class="action-history-info">
-                        <span>Started at:</span><span>13 June 2016 00:00:00</span>
-                        <span>Finished at:</span><span>13 June 2016 00:00:00</span>
-                    </div>
-                    <div class="action-history-description">
-                        Comment: hjdsdsd
-                    </div>
-                </div>
+            <div class="col-xs-12 col-md-3">
+                Another infoss
             </div>
         </div>
+        
     </div>
 </div>
+@endsection
+
+@section('script_init')
+<script type="text/javascript">
+    var trackerId = '{{ $tracker->slug }}',
+        trackerOwner = {{ $tracker->owner_id }},
+        currentUser = {{ Auth::check() ? Auth::user()->id : 'null' }};
+</script>
 @endsection

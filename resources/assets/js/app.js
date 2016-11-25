@@ -26,7 +26,7 @@ $(document).ready(function(){
 });
 
 if ($('#input-tracker').length > 0) {
-    const app = new Vue({
+    new Vue({
         el: '#input-tracker',
         data: {
             tracker_name: ''
@@ -54,3 +54,5 @@ if ($('#input-tracker').length > 0) {
         }
     });
 }
+
+require('./tracker');

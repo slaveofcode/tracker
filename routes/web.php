@@ -14,5 +14,6 @@
 Route::match(['get', 'post'], '/', 'HomeController@index');
 Route::post('tracker/create', 'TrackerController@create');
 Route::get('track/{trackId}', 'TrackerController@index');
+Route::post('action-item/create', 'ActionItemController@create');
 Route::get('auth/google', 'Auth\AuthController@redirectToProvider')->name('googleAuth');
 Route::get('auth/google/callback', 'Auth\AuthController@handleProviderCallback');

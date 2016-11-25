@@ -18,9 +18,16 @@
             @section('container')
             @show
         </div>
+        <div id="tracker-menu-container">
+            <a href="{{ action('HomeController@index') }}">
+                <span class="glyphicon glyphicon-home"></span>
+            </a>
+        </div>
+        @section('script_init')
+        @show
         <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
         <script src="{{ asset('vendor/vue/dist/vue.min.js') }}"></script>
-        <script src="{{ asset('lib/vue-router.2.0.3.js') }}"></script>
+        <script src="{{ asset('vendor/autosize/dist/autosize.min.js') }}"></script>
         <script src="{{ elixir('js/app.js') }}"></script>
     </body>
 </html>
