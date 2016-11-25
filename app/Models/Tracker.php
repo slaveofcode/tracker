@@ -11,7 +11,7 @@ class Tracker extends Model
 
     public function actionItems()
     {
-        return $this->hasMany(ActionItems::class);
+        return $this->hasMany(ActionItem::class);
     }
 
     public function user()

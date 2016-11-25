@@ -183,7 +183,7 @@ td,
 th {
   padding: 0; }
 
-/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/srcpublic/build//css/main-e93169a8f6.css */
+/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/srcpublic/build//css/main-9c0c8991a6.css */
 @media print {
   *,
   *:before,
@@ -5769,8 +5769,8 @@ button.close {
 html, body {
   background-color: #fff;
   color: #4b5154;
-  font-family: 'Raleway', sans-serif;
-  font-weight: 100;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   height: 100vh;
   margin: 0; }
 
@@ -5800,5 +5800,28 @@ body {
   outline: none;
   box-shadow: none;
   border: none; }
+
+.tracker-head {
+  margin-bottom: 20px; }
+  .tracker-head .title {
+    margin-bottom: 10px;
+    color: #b6a338; }
+
+.tracker-info-list {
+  margin: 0;
+  padding: 10px; }
+  .tracker-info-list li {
+    font-size: 14px;
+    margin-right: 20px;
+    float: left;
+    list-style-type: none; }
+    .tracker-info-list li .tracker-info-label {
+      color: #2ab27b;
+      margin-right: 3px;
+      font-weight: 600; }
+  .tracker-info-list:after {
+    content: '';
+    display: block;
+    clear: both; }
 
 /*# sourceMappingURL=main.css.map */

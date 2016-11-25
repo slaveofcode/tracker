@@ -13,8 +13,8 @@ $dark_font: #636b6f;
 html, body {
     background-color: #fff;
     color: darken($dark_font, 10%);
-    font-family: 'Raleway', sans-serif;
-    font-weight: 100;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 300;
     height: 100vh;
     margin: 0;
 }
@@ -51,4 +51,39 @@ body {
     outline: none;
     box-shadow: none;
     border: none;
+}
+
+.tracker-head {
+    margin-bottom: $gap;
+
+    .title {
+        margin-bottom: $gap / 2;
+        color: darken($brand-warning, 10%);
+    } 
+}
+
+.tracker-info-list {
+    margin: 0;
+    padding: $gap / 2;
+    li {
+        font-size: 14px;
+        margin-right: $gap;
+        float: left;
+        list-style-type: none;
+
+        .tracker-info-label {
+            color: $brand-success;
+            margin-right: 3px;
+            font-weight: 600;
+        }
+
+        .tracker-info-value {
+
+        }
+    }
+    &:after {
+        content: '';
+        display: block;
+        clear: both;
+    }
 }

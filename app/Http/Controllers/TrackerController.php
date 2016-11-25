@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Tracker;
 use Hashids\Hashids;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 
 class TrackerController extends Controller
@@ -58,24 +59,22 @@ class TrackerController extends Controller
 
     public function index(Request $request, $trackId)
     {
-        if ($tracker = Tracker::where("slug", "=", $trackId)->first()) {
+        $tracker = Tracker::with(['actionItems', 'user'])->where("slug", "=", $trackId)->firstOrFail();
 
-            $title = $tracker->name;
-            
-            $user = $tracker->user;
+        $title  = $tracker->name;
+        $user   = $tracker->user;
 
-            $userTrackers = $user->trackers;
-
-            if ($user) {
-                $title = "{$tracker->name} by {$user->name}";
-            }
-
-            return view('tracker', [
-                'pageTitle' => $title
-            ]);
+        if ($user) {
+            $title = "{$tracker->name} by {$user->name}";
         }
 
-        /* TODO: show 404 */
-        return response()->view();
+        $currentStatus = 'Running';
+
+        return view('tracker', [
+            'pageTitle'         => $title,
+            'tracker'           => $tracker,
+            'trackerStatus'     => $currentStatus
+        ]);
+        
     }
 }

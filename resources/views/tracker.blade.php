@@ -5,20 +5,26 @@
 @section('container')
 <div id="tracker-content">
     <div class="tracker-head">
-        <h1 class="title">{{ $pageTitle }}</h1>
+        <h1 class="title">{{ $tracker->name }}</h1>
         <div class="tracker-info">
             <ul class="tracker-info-list">
                 <li>
                     <span class="tracker-info-label">Owner:</span>
-                    <span class="tracker-info-value">None (everybody can edit)</span>
+                    <span class="tracker-info-value">
+                        @if ($tracker->user)
+                            {{ $tracker->user->name }}
+                        @else
+                            None (everyone can edit)
+                        @endif
+                    </span>
                 </li>
                 <li>
                     <span class="tracker-info-label">Created:</span>
-                    <span class="tracker-info-value">Yesterday</span>
+                    <span class="tracker-info-value">{{ $tracker->created_at->diffForHumans() }}</span>
                 </li>
                 <li>
                     <span class="tracker-info-label">Current Status:</span>
-                    <span class="tracker-info-value">Running</span>
+                    <span class="tracker-info-value">{{ $trackerStatus }}</span>
                 </li>
                 <li>
                     <span class="tracker-info-label">Running Time:</span>
@@ -34,6 +40,7 @@
                 </li>
             </ul>
         </div>
+        <hr/>
     </div>
     <div class="tracker-body">
         <button class="btn btn-primary">Add Action +</button>
