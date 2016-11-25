@@ -28,15 +28,15 @@
                 </li>
                 <li>
                     <span class="tracker-info-label">Running Time:</span>
-                    <span class="tracker-info-value">12 Hour 13 mins</span>
+                    <span class="tracker-info-value">{{ $trackerTotalRunning }}</span>
                 </li>
                 <li>
                     <span class="tracker-info-label">Activity Started:</span>
-                    <span class="tracker-info-value">18 June 2016 at 00:00:00</span>
+                    <span class="tracker-info-value">{{ $trackerHistoryStarted or ' - ' }}</span>
                 </li>
                 <li>
                     <span class="tracker-info-label">Activity Finished:</span>
-                    <span class="tracker-info-value">-</span>
+                    <span class="tracker-info-value">{{ $trackerHistoryFinished or ' - ' }}</span>
                 </li>
             </ul>
         </div>
