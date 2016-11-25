@@ -59,8 +59,19 @@ class TrackerController extends Controller
     public function index(Request $request, $trackId)
     {
         if ($tracker = Tracker::where("slug", "=", $trackId)->first()) {
+
+            $title = $tracker->name;
+            
+            $user = $tracker->user;
+
+            $userTrackers = $user->trackers;
+
+            if ($user) {
+                $title = "{$tracker->name} by {$user->name}";
+            }
+
             return view('tracker', [
-                'pageTitle' => $tracker->name
+                'pageTitle' => $title
             ]);
         }
 

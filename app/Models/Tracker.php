@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\User;
 
 class Tracker extends Model
 {
@@ -11,5 +12,10 @@ class Tracker extends Model
     public function actionItems()
     {
         return $this->hasMany(ActionItems::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'owner_id');
     }
 }

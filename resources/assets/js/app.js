@@ -25,27 +25,32 @@ $(document).ready(function(){
     $('#input-tracker').focus();
 });
 
-const app = new Vue({
-    el: '#input-tracker',
-    data: {
-        tracker_name: ''
-    },
-    methods: {
-        create: function(event){
-            if (event.keyCode == 13) {
-                $.post({
-                    url: '/tracker/create',
-                    data: {
-                        name: this.tracker_name
-                    },
-                    success: function(r){
-                        if (r.created) {
-                            // redirect to track/<r.tracker> using vue
-                        }
-                    },
-                    dataType: 'json'
-                });
+if ($('#input-tracker').length > 0) {
+    const app = new Vue({
+        el: '#input-tracker',
+        data: {
+            tracker_name: ''
+        },
+        methods: {
+            create: function(event){
+                if (event.keyCode == 13) {
+                    $.post({
+                        url: '/tracker/create',
+                        data: {
+                            name: this.tracker_name
+                        },
+                        success: function(r){
+                            if (r.created) {
+                                // redirect to track/<r.tracker> using vue
+                                window.location = '/track/' + r.tracker;
+                            } else {
+                                alert('Create tracker failed');
+                            }
+                        },
+                        dataType: 'json'
+                    });
+                }
             }
         }
-    }
-});
+    });
+}
