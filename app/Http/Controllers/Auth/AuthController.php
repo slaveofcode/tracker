@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use App\User;
 use Socialite;
 
 class AuthController extends Controller
@@ -26,29 +28,37 @@ class AuthController extends Controller
     {
         $user = Socialite::driver('google')->user();
 
-        $user->getId();
-        $user->getNickname();
-        $user->getName();
-        $user->getAvatar();
+        $foundUser = null;
 
         /*
          * Find existing users
          */
         if (!User::where('email', '=', $user->getEmail())->exists())
         {
-            $newUser        = new User;
-            $newUser->name  = $user->getName();
-            $newUser->email = $user->getEmail();
+            $newUser                    = new User;
+            $newUser->name              = $user->getName();
+            $newUser->email             = $user->getEmail();
+            $newUser->google_id         = $user->getId();
+            $newUser->google_nickname   = $user->getNickname();
+            $newUser->google_avatar     = $user->getAvatar();
             $newUser->save();
 
+            $foundUser = $newUser;
+
         } else {
+            
             /*
-             * Authorizing
+             * Get user
              */
             $foundUser = User::where('email', '=', $user->getEmail())->first();
+
         }
 
-        
+        if ($foundUser) {
+            Auth::login($foundUser);
+        }
+
+        return redirect()->to('/');
     }
 
 

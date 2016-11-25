@@ -1,0 +1,22 @@
+{
+  "name": "tracker",
+  "description": "",
+  "main": "",
+  "authors": [
+    "Aditya Kresna <zeandcode@gmail.com>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/slaveofcode/tracker",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/vendor",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.1.1",
+    "vue": "^2.1.3"
+  }
+}

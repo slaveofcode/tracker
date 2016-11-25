@@ -13,13 +13,39 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
+
+$.ajaxSetup({
+    headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    }
+});
+
+$(document).ready(function(){
+    $('#input-tracker').focus();
+});
 
 const app = new Vue({
     el: '#input-tracker',
+    data: {
+        tracker_name: ''
+    },
     methods: {
-        opening: function(){
-            this.focus;
+        create: function(event){
+            if (event.keyCode == 13) {
+                $.post({
+                    url: '/tracker/create',
+                    data: {
+                        name: this.tracker_name
+                    },
+                    success: function(r){
+                        if (r.created) {
+                            // redirect to track/<r.tracker> using vue
+                        }
+                    },
+                    dataType: 'json'
+                });
+            }
         }
     }
 });

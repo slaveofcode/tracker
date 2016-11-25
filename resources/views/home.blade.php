@@ -4,14 +4,19 @@
 
 @section('container')
 <div id="form-action-tracker" class="col-md-6 col-md-offset-3">
-    <a href="{{ route('googleAuth') }}">Login Google</a>
+    @unless (Auth::check())
+        <a class="pull-right" href="{{ route('googleAuth') }}">Login with Google</a>
+    @endunless
+    @if (Auth::check())
+    <span class="pull-right text-warning">Hi, {{  Auth::user()->name }}</span>
+    @endif
     <h1 class="title">Action Tracker</h1>
-    <form action="/" method="post">
-        <div class="form-group">
-            <input type="text" class="form-control input-lg" id="input-tracker" placeholder="ex: QOLEGA">
-            <p class="help-block">Press Enter to create.</p>
-        </div>
-    </form>
+    
+    <div class="form-group">
+        <input type="text" class="form-control input-lg" id="input-tracker" placeholder="ex: QOLEGA" v-on:keyup="create($event)" autocomplete="off" v-model="tracker_name">
+        <p class="help-block">Press Enter to create.</p>
+    </div>
+    
     <hr/>
 </div>
 @endsection
