@@ -19,6 +19,10 @@
                     </span>
                 </li>
                 <li>
+                    <span class="tracker-info-label">Total Actions:</span>
+                    <span class="tracker-info-value">{{ $tracker->actionItems->count() }}</span>
+                </li>
+                <li>
                     <span class="tracker-info-label">Created:</span>
                     <span class="tracker-info-value">{{ $tracker->created_at->diffForHumans() }}</span>
                 </li>
@@ -64,5 +68,11 @@
     var trackerId = '{{ $tracker->slug }}',
         trackerOwner = {{ $tracker->owner_id }},
         currentUser = {{ Auth::check() ? Auth::user()->id : 'null' }};
+</script>
+@endsection
+
+@section('script_append')
+<script type="text/javascript">
+    
 </script>
 @endsection

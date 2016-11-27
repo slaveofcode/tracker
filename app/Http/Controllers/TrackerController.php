@@ -20,9 +20,11 @@ class TrackerController extends Controller
     const HASHID_MIN_LENGTH         = 4;
     const FILE_EXTENSION_LIST       = [
         'json', 'xml', 'php', 'js', 'css', 'rb', 'py', 'jpg', 'png', 'tiff', 'sh', 'java', 'gif', 'psd', 'html'];
-    const TRACKER_STATUS_IDLE       = 'IDLE';
-    const TRACKER_STATUS_RUNNING    = 'RUNNING';
-    const TRACKER_STATUS_FINISHED   = 'FINISHED';
+    
+    const TRACKER_STATUS_IDLE       = 'IDLE'; // no history started / created
+    const TRACKER_STATUS_RUNNING    = 'RUNNING'; // running
+    const TRACKER_STATUS_FINISHED   = 'FINISHED'; // finished
+    const TRACKER_STATUS_STOPPED    = 'STOPPED'; // already running before but stopped
 
     public function create(Request $request)
     {
@@ -71,8 +73,21 @@ class TrackerController extends Controller
         $user   = $tracker->user;
 
         if ($user) {
-            $title = "{$tracker->name} by {$user->name}";
+            $title = "{$tracker->name} by: {$user->name}";
         }
+
+        /* TODO: Sync the action item status with action history */
+
+        $actionItemsJson = [];
+        $tracker->actionItems->each(function($action) use(&$actionItemsJson){
+
+            $actionItemsJson[] = [
+                'id'        => $action->id,
+                'content'   => $action->description,
+                'status'    => $action->status,
+                'created'   => $action->created_at
+            ];
+        });
 
         return view('tracker', [
             'pageTitle'                 => $title,
@@ -80,7 +95,8 @@ class TrackerController extends Controller
             'trackerStatus'             => $this->getStatus($tracker),
             'trackerTotalRunning'       => $this->getTotalRunningTime($tracker),
             'trackerHistoryStarted'     => $this->getFirstActivity($tracker),
-            'trackerHistoryFinished'    => $this->getLastActivity($tracker)
+            'trackerHistoryFinished'    => $this->getLastActivity($tracker),
+            'actionItemValues'          => json_encode($actionItemsJson, JSON_HEX_QUOT | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS)
         ]);
         
     }
@@ -92,6 +108,7 @@ class TrackerController extends Controller
          * - If Has ActionItem: 
          *   - All (action.status == Done) = Finished
          *   - Any (action.status == Paused) = Idle
+         *   - Any (action.status == Paused and has Histories) = Stopped
          *   - Any (action.status == Running) = Running 
          */
          $status = self::TRACKER_STATUS_IDLE;
@@ -110,9 +127,14 @@ class TrackerController extends Controller
                  }
 
                  if ($actionItem->status == ActionItem::STATUS_PAUSED
-                    && $status != self::TRACKER_STATUS_RUNNING) {
+                    && !in_array($status, [self::TRACKER_STATUS_RUNNING, self::TRACKER_STATUS_STOPPED])) {
                     /* Set status as Idle if current status not set as self::TRACKER_STATUS_RUNNING */
                     $status = self::TRACKER_STATUS_IDLE;
+                 }
+
+                 if ($actionItem->status == ActionItem::STATUS_PAUSED
+                    && $actionItem->actionHistories()->count() > 0) {
+                    $status = self::TRACKER_STATUS_STOPPED;
                  }
 
                  if ($actionItem->status == ActionItem::STATUS_RUNNING) {

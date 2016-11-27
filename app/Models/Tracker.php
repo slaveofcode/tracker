@@ -23,4 +23,9 @@ class Tracker extends Model
     {
         return $this->belongsTo(User::class, 'owner_id');
     }
+
+    public function hasOwner()
+    {
+        return !is_null($this->owner_id);
+    }
 }

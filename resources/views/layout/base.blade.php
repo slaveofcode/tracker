@@ -19,9 +19,20 @@
             @show
         </div>
         <div id="tracker-menu-container">
-            <a href="{{ action('HomeController@index') }}">
+            <a href="{{ action('HomeController@index') }}" title="Create new Tracker">
                 <span class="glyphicon glyphicon-home"></span>
             </a>
+            @unless (Auth::check())
+                <a href="{{ route('googleAuth') }}" title="Login with Google Account">
+                    <span class="glyphicon glyphicon-user"></span>
+                </a>
+            @endunless
+            @if (Auth::check())
+                <a href="{{ route('logout') }}" title="Logout">
+                    <span class="glyphicon glyphicon-off"></span>
+                </a>
+            @endif
+            
         </div>
         @section('script_init')
         @show
@@ -29,5 +40,7 @@
         <script src="{{ asset('vendor/vue/dist/vue.min.js') }}"></script>
         <script src="{{ asset('vendor/autosize/dist/autosize.min.js') }}"></script>
         <script src="{{ elixir('js/app.js') }}"></script>
+        @section('script_append')
+        @show
     </body>
 </html>

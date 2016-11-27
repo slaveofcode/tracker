@@ -3,19 +3,30 @@
 namespace App\Http\Controllers\Auth;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 use App\Http\Controllers\Controller;
 use App\User;
 use Socialite;
 
 class AuthController extends Controller
 {
+    const REDIRECT_SESSION = 'lastUrlRedirect';
     /**
      * Redirect the user to the GitHub authentication page.
      *
      * @return Response
      */
-    public function redirectToProvider()
+    public function redirectToProvider(Request $request)
     {
+        $session = $request->session();
+        // set last url to session
+        if ($session->has(self::REDIRECT_SESSION)) {
+            $session->forget(self::REDIRECT_SESSION);
+        }
+
+        $session->put(self::REDIRECT_SESSION, URL::previous());
+
         return Socialite::driver('google')->redirect();
     }
 
@@ -24,7 +35,7 @@ class AuthController extends Controller
      *
      * @return Response
      */
-    public function handleProviderCallback()
+    public function handleProviderCallback(Request $request)
     {
         $user = Socialite::driver('google')->user();
 
@@ -54,12 +65,25 @@ class AuthController extends Controller
 
         }
 
+        URL::previous();
+
         if ($foundUser) {
             Auth::login($foundUser);
         }
 
-        return redirect()->to('/');
+        $redirectUrl = '/';
+        $session = $request->session();
+        if ($session->has(self::REDIRECT_SESSION)) {
+            $redirectUrl = $session->get(self::REDIRECT_SESSION);
+        }
+
+        return redirect()->to($redirectUrl);
     }
 
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->back();
+    }
 
 }

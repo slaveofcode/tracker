@@ -23,6 +23,8 @@ $.ajaxSetup({
 
 $(document).ready(function(){
     $('#input-tracker').focus();
+    
+    $('[data-toggle="tooltip"]').tooltip();
 });
 
 if ($('#input-tracker').length > 0) {
